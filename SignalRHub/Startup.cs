@@ -29,7 +29,7 @@ namespace SignalRHub
                 builder
                 .AllowAnyMethod()
                 .AllowAnyHeader()
-                .WithOrigins("http://localhost:4200")
+                .AllowAnyOrigin()                
                 .AllowCredentials(); 
             }));
 

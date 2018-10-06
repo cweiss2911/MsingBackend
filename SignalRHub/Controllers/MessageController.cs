@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Messages;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 

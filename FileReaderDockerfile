@@ -1,0 +1,19 @@
+﻿FROM microsoft/dotnet:2.1-sdk AS build
+
+WORKDIR /app
+
+COPY . ./
+RUN dotnet restore FileReader/*.csproj 
+RUN dotnet publish FileReader/*.csproj -c Release -o out
+
+# build runtime image
+FROM microsoft/dotnet:2.1-aspnetcore-runtime AS base
+WORKDIR /app
+COPY --from=build /app/FileReader/out .
+EXPOSE 80/tcp
+ENTRYPOINT ["dotnet", "FileReader.dll"]
+
+docker build -t writer .
+
+# docker build -f FileReaderDockerfile -t filereader .
+# docker run -e ContainerFlag=1 -e InputLocation=testlocation --name my-filereader filereader

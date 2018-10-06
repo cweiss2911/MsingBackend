@@ -5,7 +5,11 @@ VisualStudioVersion = 15.0.28010.2003
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MsingBackend", "MsingBackend\MsingBackend.csproj", "{F69257E9-2ABA-412A-88F6-3BFF62856C33}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignalRHub", "SignalRHub\SignalRHub.csproj", "{2B100ECB-1C9D-41E2-A768-C85E56DED5FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SignalRHub", "SignalRHub\SignalRHub.csproj", "{2B100ECB-1C9D-41E2-A768-C85E56DED5FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileReader", "FileReader\FileReader.csproj", "{846B09A0-7A3F-42E1-9651-667BA2F48890}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messages", "Messages\Messages.csproj", "{B93E62C8-94AD-494C-A537-079FE93D666B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{2B100ECB-1C9D-41E2-A768-C85E56DED5FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B100ECB-1C9D-41E2-A768-C85E56DED5FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B100ECB-1C9D-41E2-A768-C85E56DED5FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{846B09A0-7A3F-42E1-9651-667BA2F48890}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{846B09A0-7A3F-42E1-9651-667BA2F48890}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{846B09A0-7A3F-42E1-9651-667BA2F48890}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{846B09A0-7A3F-42E1-9651-667BA2F48890}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B93E62C8-94AD-494C-A537-079FE93D666B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B93E62C8-94AD-494C-A537-079FE93D666B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B93E62C8-94AD-494C-A537-079FE93D666B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B93E62C8-94AD-494C-A537-079FE93D666B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
