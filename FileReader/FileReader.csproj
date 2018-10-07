@@ -13,8 +13,4 @@
     <ProjectReference Include="..\Messages\Messages.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="FileReader\" />
-  </ItemGroup>
-
 </Project>

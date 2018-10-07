@@ -1,9 +1,5 @@
-﻿using Messages;
-using System;
-using System.IO;
-using System.Net.Http;
-using System.Threading;
-using System.Configuration;
+﻿using FileReader.FileReader;
+using FileReader.FileReadHandler;
 
 namespace FileReader
 {
@@ -18,40 +14,16 @@ namespace FileReader
 
             _notifier = new HttpNotifier(fileReaderConfig.NotificationTarget);
 
-            //Environment.Exit(4919);
+            IFileReader fileReader = new PoorMansFileReader(fileReaderConfig.InputLocation);
+            IReadHandler readHandler = new ReadHandler(_notifier);
 
-            //FileSystemWatcher fileSystemWatcher = new FileSystemWatcher(fileReaderConfig.InputLocation);
-            //fileSystemWatcher.Created += OnFileCreated;
-            //fileSystemWatcher.EnableRaisingEvents = true;
-
-            while (true)
+            fileReader.FileRead += (fileReadEventArgs) => 
             {
-                Thread.Sleep(1000);
-                var all = Directory.GetFiles(fileReaderConfig.InputLocation, "*.*", SearchOption.AllDirectories);
-                for (int i = 0; i < all.Length; i++)
-                {
-                    FileInfo fileInfo = new FileInfo(all[i]);
-
-                    OnFileCreated(null, new FileSystemEventArgs(WatcherChangeTypes.Created, fileInfo.DirectoryName, fileInfo.Name));
-                    //Console.WriteLine(all[i]);
-                }
-            }
-        }
-
-        private static void OnFileCreated(object sender, FileSystemEventArgs e)
-        {
-            Console.WriteLine($"got file {e.Name}");
-            Message message = new Message()
-            {
-                Type = "success",
-                Payload = e.Name,
+                readHandler.HandleReadFile(fileReadEventArgs.FileInfo);
             };
 
-            _notifier.Notify(new JsonContent(message));
-
-            Console.WriteLine("Deleting");
-            File.Delete(e.FullPath);
-            Console.WriteLine("Deleted");
+            fileReader.Start();            
         }
+
     }
 }
