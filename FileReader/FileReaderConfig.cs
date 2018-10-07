@@ -7,5 +7,6 @@ namespace FileReader
     public class FileReaderConfig
     {
         public string InputLocation { get; set; }
+        public string NotificationTarget { get; set; }
     }
 }

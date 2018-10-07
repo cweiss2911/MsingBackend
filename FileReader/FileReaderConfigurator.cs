@@ -10,8 +10,9 @@ namespace FileReader
     {
         private IConfigValueGetter _configValueGetter;
 
-        private const string ContainerFlag= "ContainerFlag";
+        private const string ContainerFlag = "ContainerFlag";
         private const string InputLocation = "InputLocation";
+        private const string NotificationTarget = "NotificationTarget";
 
         public FileReaderConfigurator()
         {
@@ -30,6 +31,7 @@ namespace FileReader
             FileReaderConfig fileReaderConfig = new FileReaderConfig();
 
             fileReaderConfig.InputLocation = _configValueGetter.GetConfigValue(InputLocation);
+            fileReaderConfig.NotificationTarget = _configValueGetter.GetConfigValue(NotificationTarget);
 
             return fileReaderConfig;
         }

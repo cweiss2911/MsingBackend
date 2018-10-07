@@ -12,3 +12,5 @@ WORKDIR /app
 COPY --from=build /app/SignalRHub/out .
 EXPOSE 80/tcp
 ENTRYPOINT ["dotnet", "SignalRHub.dll"]
+
+# docker run --name signalr -p 5555:80 --network="msing" signalrhub

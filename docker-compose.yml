@@ -1,0 +1,34 @@
+﻿version: "3.2"
+#docker-compose build
+#docker-compose up
+
+networks:
+  msing:
+
+services:
+
+  filereader:
+    build: 
+      context: .\
+      dockerfile: FileReaderDockerfile
+    environment:      
+      - ContainerFlag=1 
+      - InputLocation=/volume 
+      - NotificationTarget=http://signalr:80      
+    container_name: my-filereader    
+    networks:
+      - msing 
+    volumes:
+      - "C:/input:/volume"
+    depends_on:
+      - signalr
+
+  signalr:
+    build: 
+      context: .\
+      dockerfile: SignalRHubDockerfile    
+    container_name: signalrhub
+    ports:
+      - "5555:80"
+    networks:
+      - msing 

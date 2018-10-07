@@ -13,7 +13,6 @@ COPY --from=build /app/FileReader/out .
 EXPOSE 80/tcp
 ENTRYPOINT ["dotnet", "FileReader.dll"]
 
-docker build -t writer .
-
 # docker build -f FileReaderDockerfile -t filereader .
-# docker run -e ContainerFlag=1 -e InputLocation=testlocation --name my-filereader filereader
+# docker run --rm --network="msing" -v C:/input:/volume -e ContainerFlag=1 -e InputLocation=/volume -e NotificationTarget="http://signalr:80" --name my-filereader filereader
+# docker inspect my-filereader -f "{{json .NetworkSettings.Networks }}"
