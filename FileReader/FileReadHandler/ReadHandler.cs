@@ -1,14 +1,19 @@
-﻿using Messages;
+﻿using Confluent.Kafka;
+using Confluent.Kafka.Serialization;
+using FileReader.Notifier;
+using Messages;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading;
 
 namespace FileReader.FileReadHandler
 {
     public class ReadHandler : IReadHandler
     {
         private INotifier _notifier;
+        private const string Topic = "FileRead";
 
         public ReadHandler(INotifier notifier)
         {
@@ -18,7 +23,6 @@ namespace FileReader.FileReadHandler
         public void HandleReadFile(FileInfo fileInfo)
         {
             SendMessage(fileInfo.Name);
-
             DeleteFile(fileInfo.FullName);
         }
 
@@ -32,13 +36,13 @@ namespace FileReader.FileReadHandler
 
         private void SendMessage(string payload)
         {
-            Message message = new Message()
+            Messages.Message message = new Messages.Message()
             {
                 Type = "success",
                 Payload = payload,
             };
 
-            _notifier.Notify(new JsonContent(message));
+            _notifier.Notify(message);
         }
 
     }

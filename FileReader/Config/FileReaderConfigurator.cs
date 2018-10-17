@@ -1,4 +1,4 @@
-﻿using FileReader.ConfigValueGetter;
+﻿using ConfigValueGetter;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -13,10 +13,12 @@ namespace FileReader
         private const string ContainerFlag = "ContainerFlag";
         private const string InputLocation = "InputLocation";
         private const string NotificationTarget = "NotificationTarget";
-
+        private const string FileReadTopicName = "FileReadTopicName";
+        private const string KafkaServerAddress = "KafkaServerAddress";
+        
         public FileReaderConfigurator()
-        {
-            if (IsInContainer())
+        {            
+            if (ContainerChecker.AmIinAContainer())
             {
                 _configValueGetter = new EnvironmentVariableConfigValueGetter();
             }
@@ -32,15 +34,11 @@ namespace FileReader
 
             fileReaderConfig.InputLocation = _configValueGetter.GetConfigValue(InputLocation);
             fileReaderConfig.NotificationTarget = _configValueGetter.GetConfigValue(NotificationTarget);
+            fileReaderConfig.FileReadTopicName = _configValueGetter.GetConfigValue(FileReadTopicName);
+            fileReaderConfig.KafkaServerAddress = _configValueGetter.GetConfigValue(KafkaServerAddress);
 
             return fileReaderConfig;
         }
 
-        private bool IsInContainer()
-        {
-            string dockerFlag = Environment.GetEnvironmentVariable(ContainerFlag);
-            bool isInContainer = !string.IsNullOrEmpty(dockerFlag);
-            return isInContainer;
-        }
     }
 }

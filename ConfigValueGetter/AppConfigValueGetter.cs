@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Text;
 
-namespace FileReader.ConfigValueGetter
+namespace ConfigValueGetter
 {
     public class AppConfigValueGetter : IConfigValueGetter
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace FileReader.ConfigValueGetter
+namespace ConfigValueGetter
 {
     public class EnvironmentVariableConfigValueGetter : IConfigValueGetter
     {

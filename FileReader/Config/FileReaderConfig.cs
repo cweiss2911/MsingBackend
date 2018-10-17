@@ -8,5 +8,7 @@ namespace FileReader
     {
         public string InputLocation { get; set; }
         public string NotificationTarget { get; set; }
+        public string KafkaServerAddress { get; set; }
+        public string FileReadTopicName { get; set; }
     }
 }

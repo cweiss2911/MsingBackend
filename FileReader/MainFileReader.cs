@@ -1,5 +1,13 @@
-﻿using FileReader.FileReader;
+﻿using Confluent.Kafka;
+using Confluent.Kafka.Serialization;
+using FileReader.FileReader;
 using FileReader.FileReadHandler;
+using FileReader.Notifier;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace FileReader
 {
@@ -12,17 +20,18 @@ namespace FileReader
             FileReaderConfigurator fileReaderConfigurator = new FileReaderConfigurator();
             FileReaderConfig fileReaderConfig = fileReaderConfigurator.ReadConfig();
 
-            _notifier = new HttpNotifier(fileReaderConfig.NotificationTarget);
+            //_notifier = new HttpNotifier(fileReaderConfig.NotificationTarget);
+            _notifier = new KafkaNotifier(fileReaderConfig.KafkaServerAddress, fileReaderConfig.FileReadTopicName);
 
             IFileReader fileReader = new PoorMansFileReader(fileReaderConfig.InputLocation);
             IReadHandler readHandler = new ReadHandler(_notifier);
 
-            fileReader.FileRead += (fileReadEventArgs) => 
+            fileReader.FileRead += (fileReadEventArgs) =>
             {
                 readHandler.HandleReadFile(fileReadEventArgs.FileInfo);
             };
 
-            fileReader.Start();            
+            fileReader.Start();
         }
 
     }

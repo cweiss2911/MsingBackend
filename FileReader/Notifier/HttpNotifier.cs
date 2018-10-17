@@ -1,7 +1,7 @@
 ﻿using Messages;
 using System.Net.Http;
 
-namespace FileReader
+namespace FileReader.Notifier
 {
     internal class HttpNotifier : INotifier
     {
@@ -14,9 +14,10 @@ namespace FileReader
             _notificationTarget = notificationTarget;
         }
 
-        public void Notify(JsonContent jsonContent)
+        public void Notify(Message message)
         {
-            _httpClient.PostAsync($"{_notificationTarget}/api/message", jsonContent);            
+            JsonContent jsonContent = new JsonContent(message);
+            _httpClient.PostAsync($"{_notificationTarget}/api/message", jsonContent);
         }
     }
 }
