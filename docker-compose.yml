@@ -5,6 +5,7 @@
 # docker-compose up -d --force-recreate
 # docker exec -it kafka /opt/kafka_2.11-2.0.0/bin/kafka-topics.sh --create --zookeeper zookeeper:2181 --replication-factor 1 --partitions 1 --topic FileRead
 
+# docker exec -it kafka /opt/kafka_2.11-2.0.0/bin/kafka-topics.sh --create --zookeeper zookeeper:2181 --replication-factor 1 --partitions 1 --topic FileContent
 
 # docker exec -it kafka /opt/kafka_2.11-2.0.0/bin/kafka-topics.sh --create --zookeeper zookeeper:2181 --replication-factor 1 --partitions 1 --topic FileRead
 
@@ -19,6 +20,9 @@
 # docker exec -it zookeeper zookeeper-shell.sh localhost:2181 <<< "ls /brokers/ids"
  
  # /opt/zookeeper-3.4.9/bin/zkCli.sh -server 127.0.0.1:2181
+ 
+# docker-compose up -d --force-recreate --build signalr
+# docker-compose up -d --build filereader
 networks:
   msing:
 
@@ -29,11 +33,12 @@ services:
       context: .\
       dockerfile: FileReaderDockerfile
     environment:      
-      - ContainerFlag=1 
-      - InputLocation=/volume 
+      - InputLocation=/volume/input
+      - ProcessedLocation=/volume/processed      
       - NotificationTarget=http://signalr:80 
       - KafkaServerAddress=kafka:9092
-      - FileReadTopicName=FileRead         
+      - FileReadTopicName=FileRead   
+      - FileContentTopicName=FileContent
     container_name: my-filereader    
     networks:
       - msing 
@@ -41,9 +46,20 @@ services:
       - kafka
     volumes:
       - "C:/input:/volume"
-    depends_on:
-      - signalr
 
+  incomingmessagehandler:
+    build: 
+      context: .\
+      dockerfile: IncomingMessageHandlerDockerFile
+    environment:      
+      - ServerAddress=kafka:9092
+      - FileContentChannel=FileContent         
+    container_name: imh    
+    networks:
+      - msing 
+    depends_on:
+      - kafka
+      
   signalr:
     build: 
       context: .\
@@ -51,9 +67,9 @@ services:
     container_name: signalrhub
     ports:
       - "5555:80"
-    environment:
-      - KafkaServerAddress=kafka:9092
-      - FileReadTopicName=FileRead      
+    environment:      
+      - ServerAddress=kafka:9092
+      - FileReadChannel=FileRead      
     networks:
       - msing 
     depends_on:

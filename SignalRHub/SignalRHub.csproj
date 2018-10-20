@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ConfigValueGetter\ConfigValueGetter.csproj" />
+    <ProjectReference Include="..\KafkaClient\KafkaMessaging.csproj" />
     <ProjectReference Include="..\Messages\Messages.csproj" />
   </ItemGroup>
 

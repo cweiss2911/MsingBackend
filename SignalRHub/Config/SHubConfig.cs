@@ -7,7 +7,12 @@ namespace SignalRHub.Config
 {
     public class SHubConfig
     {
-        public string KafkaServerAddress { get; set; }
-        public string FileReadTopicName { get; set; }        
+        public Messaging Messaging { get; set; } = new Messaging();
+    }
+
+    public class Messaging
+    {
+        public string ServerAddress { get; set; }
+        public string FileReadChannel { get; set; }
     }
 }

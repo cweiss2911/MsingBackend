@@ -6,10 +6,10 @@ using System.Threading;
 
 namespace FileReader.FileReader
 {
-    
+
 
     public class PoorMansFileReader : IFileReader
-    {        
+    {
         private string _inputLocation;
 
         public PoorMansFileReader(string inputLocation)
@@ -30,7 +30,7 @@ namespace FileReader.FileReader
                     FileInfo fileInfo = new FileInfo(all[i]);
 
                     Console.WriteLine($"got file {fileInfo.Name}");
-                    FileRead(new FileReadEventArgs() { FileInfo = fileInfo });                    
+                    FileRead(new FileReadEventArgs() { FileInfo = fileInfo });
                 }
             }
         }

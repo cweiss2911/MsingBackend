@@ -13,7 +13,8 @@ namespace FileReader
 {
     public class MainFileReader
     {
-        private static INotifier _notifier;
+        private static INotifier _fileReadNotifier;
+        private static INotifier _fileContentNotifier;
 
         static void Main(string[] args)
         {
@@ -21,10 +22,14 @@ namespace FileReader
             FileReaderConfig fileReaderConfig = fileReaderConfigurator.ReadConfig();
 
             //_notifier = new HttpNotifier(fileReaderConfig.NotificationTarget);
-            _notifier = new KafkaNotifier(fileReaderConfig.KafkaServerAddress, fileReaderConfig.FileReadTopicName);
+            _fileReadNotifier = new KafkaNotifier(fileReaderConfig.KafkaServerAddress, fileReaderConfig.FileReadTopicName);
+            _fileContentNotifier = new KafkaNotifier(fileReaderConfig.KafkaServerAddress, fileReaderConfig.FileContentTopicName);
 
             IFileReader fileReader = new PoorMansFileReader(fileReaderConfig.InputLocation);
-            IReadHandler readHandler = new ReadHandler(_notifier);
+            //IReadHandler readHandler = new SendAndDeleteHandler(_fileReadNotifier);
+
+            Console.WriteLine($"{fileReaderConfig.ProcessedLocation}");
+            IReadHandler readHandler = new SendAndMoveHandler(_fileReadNotifier, _fileContentNotifier, fileReaderConfig.ProcessedLocation);
 
             fileReader.FileRead += (fileReadEventArgs) =>
             {

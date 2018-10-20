@@ -8,18 +8,19 @@ namespace SignalRHub.Config
 {
     public class SHubConfigurator
     {
-        private const string KafkaServerAddress = "KafkaServerAddress";
-        private const string FileReadTopicName = "FileReadTopicName";
-        
+        private const string ServerAddress = "ServerAddress";
+        private const string FileReadChannel = "FileReadChannel";
+
 
         public SHubConfig UpdateConfigIfRanInContainer(SHubConfig sHubConfig)
         {
             if (ContainerChecker.AmIinAContainer())
             {
-                EnvironmentVariableConfigValueGetter  configValueGetter = new EnvironmentVariableConfigValueGetter();
+                EnvironmentVariableConfigValueGetter configValueGetter = new EnvironmentVariableConfigValueGetter();
                 SHubConfig containerSHubConfig = new SHubConfig();
-                containerSHubConfig.KafkaServerAddress = configValueGetter.GetConfigValue(KafkaServerAddress);
-                containerSHubConfig.FileReadTopicName = configValueGetter.GetConfigValue(FileReadTopicName);
+
+                containerSHubConfig.Messaging.ServerAddress = configValueGetter.GetConfigValue(ServerAddress);                
+                containerSHubConfig.Messaging.FileReadChannel = configValueGetter.GetConfigValue(FileReadChannel);
 
                 return containerSHubConfig;
             }

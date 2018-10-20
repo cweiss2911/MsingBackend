@@ -10,5 +10,7 @@ namespace FileReader
         public string NotificationTarget { get; set; }
         public string KafkaServerAddress { get; set; }
         public string FileReadTopicName { get; set; }
+        public string ProcessedLocation { get; set; }
+        public string FileContentTopicName { get; set; }
     }
 }

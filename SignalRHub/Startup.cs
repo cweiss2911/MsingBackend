@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using KafkaMessaging;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -38,7 +39,8 @@ namespace SignalRHub
             }));
 
             services.AddSignalR();
-            services.AddSingleton<IKafkaClient, KafkaClient>();
+            services.AddSingleton<IMessageClient, KafkaClient>();
+            services.AddSingleton(typeof(HubMessageClient));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,20 +59,17 @@ namespace SignalRHub
 
             ConfigureKafka(app);
 
-
-            //IHubContext<NotifyHub, ITypedHubClient>
-
             app.UseMvc();
         }
 
         private void ConfigureKafka(IApplicationBuilder app)
         {
-            KafkaClient kafkaClient = (KafkaClient)app.ApplicationServices.GetService<IKafkaClient>();
+            HubMessageClient hubKafkaClient = (HubMessageClient)app.ApplicationServices.GetService<HubMessageClient>();
 
             SHubConfigurator sHubConfigurator = new SHubConfigurator();
-            kafkaClient.Settings = sHubConfigurator.UpdateConfigIfRanInContainer(kafkaClient.Settings);
-
-            kafkaClient.StartListening();
+            hubKafkaClient.Settings = sHubConfigurator.UpdateConfigIfRanInContainer(hubKafkaClient.Settings);
+            hubKafkaClient.Connect();
+            hubKafkaClient.StartListening();
         }
     }
 }

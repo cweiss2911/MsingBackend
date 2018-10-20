@@ -18,12 +18,12 @@ namespace SignalRHub.Controllers
         }
 
         [HttpPost]
-        public string Post([FromBody]Message msg)
+        public string Post([FromBody]FileReadMessage msg)
         {
             string retMessage = string.Empty;
             try
             {
-                _hubContext.Clients.All.BroadcastMessage(msg.Type, msg.Payload);
+                _hubContext.Clients.All.BroadcastMessage(msg.Type, msg.FileName);
                 retMessage = "Success";
             }
             catch (Exception e)

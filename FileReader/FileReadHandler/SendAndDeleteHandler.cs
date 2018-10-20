@@ -10,12 +10,12 @@ using System.Threading;
 
 namespace FileReader.FileReadHandler
 {
-    public class ReadHandler : IReadHandler
+    public class SendAndDeleteHandler : IReadHandler
     {
         private INotifier _notifier;
         private const string Topic = "FileRead";
 
-        public ReadHandler(INotifier notifier)
+        public SendAndDeleteHandler(INotifier notifier)
         {
             _notifier = notifier;
         }
@@ -36,10 +36,9 @@ namespace FileReader.FileReadHandler
 
         private void SendMessage(string payload)
         {
-            Messages.Message message = new Messages.Message()
-            {
-                Type = "success",
-                Payload = payload,
+            FileReadMessage message = new FileReadMessage()
+            {                
+                FileName = payload,
             };
 
             _notifier.Notify(message);

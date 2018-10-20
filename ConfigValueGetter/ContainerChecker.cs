@@ -6,7 +6,7 @@ namespace ConfigValueGetter
 {
     public static class ContainerChecker
     {
-        private const string ContainerFlag = "ContainerFlag";
+        private const string ContainerFlag = "DOTNET_RUNNING_IN_CONTAINER";
 
         public static bool AmIinAContainer()
         {
