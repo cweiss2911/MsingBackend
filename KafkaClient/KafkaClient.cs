@@ -1,4 +1,5 @@
 ﻿using Confluent.Kafka;
+using Messages;
 using System;
 using System.Threading.Tasks;
 

@@ -10,13 +10,12 @@ namespace FileReader.FileReadHandler
         private INotifier _fileReadNotifier;
         private INotifier _fileContentNotifier;
         private IFileHandler _fileHandler;
-        private string _processedLocation;
 
         public SendAndMoveHandler(INotifier fileReadNotifier, INotifier fileContentNotifier, IFileHandler fileHandler)
         {
             _fileReadNotifier = fileReadNotifier;
             _fileContentNotifier = fileContentNotifier;
-            _fileHandler = fileHandler;            
+            _fileHandler = fileHandler;
         }
 
         public void HandleReadFile(FileInfo fileInfo)
@@ -43,7 +42,7 @@ namespace FileReader.FileReadHandler
 
         private void SendFileContentMessage(FileInfo fileInfo)
         {
-            string payload = _fileHandler.ReadAllText(fileInfo.FullName);            
+            string payload = _fileHandler.ReadAllText(fileInfo.FullName);
 
             FileContentMessage message = new FileContentMessage()
             {
