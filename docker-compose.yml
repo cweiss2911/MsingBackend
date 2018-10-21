@@ -23,6 +23,9 @@
  
 # docker-compose up -d --force-recreate --build signalr
 # docker-compose up -d --build filereader
+# OpenCover.Console.exe -oldstyle -register:user -target:"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\Extensions\TestPlatform\vstest.console.exe" -targetargs:"C:\Projects\MicroservicingAround\MsingBackend\FileReaderTest\bin\Debug\netcoreapp2.1\FileReaderTest.dll" -filter:"+[*]* -[*Test]*" -output:opencovertests.xml -mergebyhash
+# "C:\Projects\ReportGenerator\net47\ReportGenerator.exe" -reports:C:\Projects\MicroservicingAround\MsingBackend\FileReaderTest\bin\Debug\netcoreapp2.1\opencovertests.xml -targetdir:coverage
+
 networks:
   msing:
 

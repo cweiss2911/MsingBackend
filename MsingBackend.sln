@@ -15,9 +15,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IncomingMessageHandler", "I
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConfigValueGetter", "ConfigValueGetter\ConfigValueGetter.csproj", "{799BE744-AC96-4FEA-8050-5C285578E171}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdiGasParser", "EdiGasParser\EdiGasParser.csproj", "{53127898-18F6-4A62-8F9A-A8BE1B8CAEE5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EdiGasParser", "EdiGasParser\EdiGasParser.csproj", "{53127898-18F6-4A62-8F9A-A8BE1B8CAEE5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KafkaMessaging", "KafkaClient\KafkaMessaging.csproj", "{3ADBA39A-492E-47D1-80D8-570547D4756C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KafkaMessaging", "KafkaClient\KafkaMessaging.csproj", "{3ADBA39A-492E-47D1-80D8-570547D4756C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{B1855E3B-EAA1-4C1A-8508-9A2AB2A11079}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileReaderTest", "FileReaderTest\FileReaderTest.csproj", "{D952B55D-3591-4DC7-8011-065C51F53FF9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,9 +61,16 @@ Global
 		{3ADBA39A-492E-47D1-80D8-570547D4756C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3ADBA39A-492E-47D1-80D8-570547D4756C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3ADBA39A-492E-47D1-80D8-570547D4756C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D952B55D-3591-4DC7-8011-065C51F53FF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D952B55D-3591-4DC7-8011-065C51F53FF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D952B55D-3591-4DC7-8011-065C51F53FF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D952B55D-3591-4DC7-8011-065C51F53FF9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D952B55D-3591-4DC7-8011-065C51F53FF9} = {B1855E3B-EAA1-4C1A-8508-9A2AB2A11079}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9FFD91B5-C329-4327-B5F2-46C8CBE75179}

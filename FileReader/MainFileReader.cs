@@ -1,5 +1,6 @@
 ﻿using Confluent.Kafka;
 using Confluent.Kafka.Serialization;
+using FileReader.FileHandling;
 using FileReader.FileReader;
 using FileReader.FileReadHandler;
 using FileReader.Notifier;
@@ -25,11 +26,13 @@ namespace FileReader
             _fileReadNotifier = new KafkaNotifier(fileReaderConfig.KafkaServerAddress, fileReaderConfig.FileReadTopicName);
             _fileContentNotifier = new KafkaNotifier(fileReaderConfig.KafkaServerAddress, fileReaderConfig.FileContentTopicName);
 
-            IFileReader fileReader = new PoorMansFileReader(fileReaderConfig.InputLocation);
+            IFileHandler fileHandler = new FileHandlerImplementation(fileReaderConfig.ProcessedLocation);
+            IFileReader fileReader = new PoorMansFileReader(fileReaderConfig.InputLocation, fileHandler);
             //IReadHandler readHandler = new SendAndDeleteHandler(_fileReadNotifier);
 
             Console.WriteLine($"{fileReaderConfig.ProcessedLocation}");
-            IReadHandler readHandler = new SendAndMoveHandler(_fileReadNotifier, _fileContentNotifier, fileReaderConfig.ProcessedLocation);
+
+            IReadHandler readHandler = new SendAndMoveHandler(_fileReadNotifier, _fileContentNotifier, fileHandler);
 
             fileReader.FileRead += (fileReadEventArgs) =>
             {

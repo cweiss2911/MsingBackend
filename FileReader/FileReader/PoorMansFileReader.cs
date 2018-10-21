@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FileReader.FileHandling;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -10,24 +11,30 @@ namespace FileReader.FileReader
 
     public class PoorMansFileReader : IFileReader
     {
-        private string _inputLocation;
+        public bool Activated { get; set; } = true;
+        public int CheckInterval { get; set; } = 1000;
 
-        public PoorMansFileReader(string inputLocation)
+        private string _inputLocation;
+        private IFileHandler _fileHandler;
+
+        public PoorMansFileReader(string inputLocation, IFileHandler fileHandler)
         {
             _inputLocation = inputLocation;
+            _fileHandler = fileHandler;
         }
 
         public event FileReadEventHandler FileRead;
 
         public void Start()
         {
-            while (true)
+            while (Activated)
             {
-                Thread.Sleep(1000);
-                var all = Directory.GetFiles(_inputLocation, "*.*", SearchOption.AllDirectories);
-                for (int i = 0; i < all.Length; i++)
+                Thread.Sleep(CheckInterval);
+                string[] allFilesInDirectory = _fileHandler.GetAllFilesInDirectory(_inputLocation);
+                                    
+                for (int i = 0; i < allFilesInDirectory.Length; i++)
                 {
-                    FileInfo fileInfo = new FileInfo(all[i]);
+                    FileInfo fileInfo = new FileInfo(allFilesInDirectory[i]);
 
                     Console.WriteLine($"got file {fileInfo.Name}");
                     FileRead(new FileReadEventArgs() { FileInfo = fileInfo });

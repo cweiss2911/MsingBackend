@@ -1,9 +1,7 @@
-﻿using FileReader.Notifier;
+﻿using FileReader.FileHandling;
+using FileReader.Notifier;
 using Messages;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace FileReader.FileReadHandler
 {
@@ -11,28 +9,22 @@ namespace FileReader.FileReadHandler
     {
         private INotifier _fileReadNotifier;
         private INotifier _fileContentNotifier;
+        private IFileHandler _fileHandler;
         private string _processedLocation;
 
-        public SendAndMoveHandler(INotifier fileReadNotifier, INotifier fileContentNotifier, string processedLocation)
+        public SendAndMoveHandler(INotifier fileReadNotifier, INotifier fileContentNotifier, IFileHandler fileHandler)
         {
             _fileReadNotifier = fileReadNotifier;
             _fileContentNotifier = fileContentNotifier;
-            _processedLocation = processedLocation;
+            _fileHandler = fileHandler;            
         }
 
         public void HandleReadFile(FileInfo fileInfo)
         {
             SendMessages(fileInfo);
-            MoveFile(fileInfo);
+            _fileHandler.MoveFile(fileInfo);
         }
 
-        private void MoveFile(FileInfo fileInfo)
-        {
-            //string target = Path.Combine(_processedLocation, $"{DateTime.Now.Ticks}{fileInfo.Name}").ToString();
-            string target = Path.Combine(_processedLocation, $"{fileInfo.Name}").ToString();
-            Console.WriteLine($"moving to {target}");
-            File.Move(fileInfo.FullName, target);
-        }
 
         private void SendMessages(FileInfo fileInfo)
         {
@@ -51,7 +43,7 @@ namespace FileReader.FileReadHandler
 
         private void SendFileContentMessage(FileInfo fileInfo)
         {
-            string payload = File.ReadAllText(fileInfo.FullName);
+            string payload = _fileHandler.ReadAllText(fileInfo.FullName);            
 
             FileContentMessage message = new FileContentMessage()
             {
